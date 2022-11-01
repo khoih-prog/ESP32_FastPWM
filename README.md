@@ -30,7 +30,7 @@
   * [3. ESP32 WiFi uses ADC2 for WiFi functions](#3-esp32-wifi-uses-adc2-for-wifi-functions)
 * [More useful Information](#more-useful-information)
 * [Usage](#usage)
-  * [1. Create PWM Instance with Pin, Frequency and dutycycle](#1-Create-PWM-Instance-with-Pin-Frequency-and-dutycycle)
+  * [1. Create PWM Instance with Pin, Frequency, dutycycle, channel (default = 0) and PWM_resolution (default = 8)](#1-create-pwm-instance-with-pin-frequency-dutycycle-channel-default--0-and-pwm_resolution-default--8)
   * [2. Initialize PWM Instance](#2-Initialize-PWM-Instance)
   * [3. Set or change PWM frequency or dutyCycle](#3-set-or-change-PWM-frequency-or-dutyCycle)
   * [4. Set or change PWM frequency and dutyCycle manually and efficiently in waveform creation](#4-Set-or-change-PWM-frequency-and-dutyCycle-manually-and-efficiently-in-waveform-creation)
