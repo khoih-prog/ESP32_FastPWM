@@ -1,0 +1,43 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ESP32_FastPWM	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+###################################
+# Class ESP32_FastPWM
+###################################
+
+setPWM_Int	KEYWORD2
+setPWM	KEYWORD2
+setPWM_Period	KEYWORD2
+setPWM_manual	KEYWORD2
+getActualDutyCycle	KEYWORD2
+getActualFreq	KEYWORD2
+getPWMPeriod	KEYWORD2
+get_freq_CPU	KEYWORD2
+getPin	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ESP32_FAST_PWM_VERSION  LITERAL1
+ESP32_FAST_PWM_VERSION_MAJOR  LITERAL1
+ESP32_FAST_PWM_VERSION_MINOR  LITERAL1
+ESP32_FAST_PWM_VERSION_PATCH  LITERAL1
+ESP32_FAST_PWM_VERSION_INT  LITERAL1
+
+MAX_PWM_RESOLUTION_BIT		LITERAL1
+MAX_PWM_RESOLUTION		LITERAL1
+
+MAX_COUNT_16BIT	LITERAL1
+
+_LEDC_CHANNELS	LITERAL1
+
+_PWM_LOGLEVEL_  LITERAL1

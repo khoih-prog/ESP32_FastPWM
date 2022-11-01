@@ -1,0 +1,30 @@
+{
+  "name": "ESP32_FastPWM",
+  "version": "1.0.0",
+  "keywords": "timing, device, control, pwm, timer, interrupt, hardware, isr, isr-based, hardware-timer, isr-timer, isr-based-timer, mission-critical, accuracy, precise, non-blocking, esp32, esp32-s2, esp32-c3, esp32-s3, synchronized-PWM, on-the-fly",
+  "description": "This library enables you to use Hardware-based PWM channels on ESP32, ESP32_S2, ESP32_S3 or ESP32_C3-based boards to create and output PWM to pins. The most important feature is they're purely hardware-based PWM channels, supporting very high PWM frequencies. Therefore, their executions are not blocked by bad-behaving functions or tasks. This important feature is absolutely necessary for mission-critical tasks. These hardware-based PWMs, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software-based PWM using ISR, millis() or micros(). That's necessary if you need to control devices requiring high precision. New efficient setPWM_manual function to facilitate waveform creation using PWM",
+  "authors":
+  {
+    "name":  "Khoi Hoang",
+    "url":   "https://github.com/khoih-prog",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/khoih-prog/ESP32_FastPWM.git"
+  },
+  "homepage": "https://github.com/khoih-prog/ESP32_FastPWM",
+  "export": {
+    "exclude": [
+      "linux",
+      "extras",
+      "tests"
+    ]
+  },
+  "license": "MIT",
+  "frameworks": "*",
+  "platforms": "espressif32",
+  "examples": "examples/*/*/*.ino",
+  "headers": ["ESP32_FastPWM.h"]
+}
