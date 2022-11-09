@@ -68,7 +68,7 @@
 
 ### Features
 
-This hardware-based PWM library enables you to use Hardware-PWM on ESP32, ESP32_S2, ESP32_S3 and ESP32_C3 boards to create and output PWM. These purely hardware-based PWM channels can generate very high PWM frequencies, depending on CPU clock and acceptable accuracy. The maximum resolution can be 20-bit with very low frequencies. Normally 8, 12 or 16-bit resolution is good enough.
+This hardware-based PWM library, a wrapper and enhancement around ESP32-core `ledc` code, enables you to use Hardware-PWM on `ESP32, ESP32_S2, ESP32_S3 and ESP32_C3` boards to create and output PWM. These purely hardware-based PWM channels can generate very high PWM frequencies, depending on CPU clock and acceptable accuracy. The maximum resolution can be 20-bit with very low frequencies. Normally 8, 12 or 16-bit resolution is good enough.
 
 ```
 // Max resolution is 20-bit
@@ -82,12 +82,14 @@ This hardware-based PWM library enables you to use Hardware-PWM on ESP32, ESP32_
 This library is using the **same or similar functions** as other FastPWM libraries, as follows, to enable you to **port your PWM code easily between platforms**
 
 - [**RP2040_PWM**](https://github.com/khoih-prog/RP2040_PWM)
-- [**Teensy_PWM**](https://github.com/khoih-prog/Teensy_PWM)
 - [**AVR_PWM**](https://github.com/khoih-prog/AVR_PWM)
 - [**megaAVR_PWM**](https://github.com/khoih-prog/megaAVR_PWM)
+- [**ESP32_FastPWM**](https://github.com/khoih-prog/ESP32_FastPWM)
 - [**SAMD_PWM**](https://github.com/khoih-prog/SAMD_PWM)
 - [**SAMDUE_PWM**](https://github.com/khoih-prog/SAMDUE_PWM)
 - [**nRF52_PWM**](https://github.com/khoih-prog/nRF52_PWM)
+- [**Teensy_PWM**](https://github.com/khoih-prog/Teensy_PWM)
+- [**ATtiny_PWM**](https://github.com/khoih-prog/ATtiny_PWM)
 - [**Portenta_H7_PWM**](https://github.com/khoih-prog/Portenta_H7_PWM)
 - [**MBED_RP2040_PWM**](https://github.com/khoih-prog/MBED_RP2040_PWM)
 - [**nRF52_MBED_PWM**](https://github.com/khoih-prog/nRF52_MBED_PWM)
@@ -230,7 +232,7 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 
 Before using any PWM `Timer` and `channel`, you have to make sure the `Timer` and `channel` has not been used by any other purpose.
 
-```
+```cpp
 // Max resolution is 20-bit
 // Resolution 65536 (16-bit) for lower frequencies, OK @ 1K
 // Resolution  4096 (12-bit) for lower frequencies, OK @ 10K
@@ -708,7 +710,7 @@ Submit issues to: [ESP32_FastPWM issues](https://github.com/khoih-prog/ESP32_Fas
 
 ## DONE
 
- 1. Basic hardware PWM-channels for ESP32, ESP32_S2, ESP32_S3 and ESP32_C3 using [ESP32 core](https://github.com/espressif/arduino-esp32)
+ 1. Basic hardware PWM-channels for `ESP32, ESP32_S2, ESP32_S3 and ESP32_C3` using [ESP32 core](https://github.com/espressif/arduino-esp32)
 
 
 ---
