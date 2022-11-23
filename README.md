@@ -6,8 +6,12 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/ESP32_FastPWM.svg)](http://github.com/khoih-prog/ESP32_FastPWM/issues)
 
+
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-ESP32_FastPWM/count.svg" title="ESP32_FastPWM Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-ESP32_FastPWM/count.svg" style="height: 30px;width: 200px;"></a>
+
 
 ---
 ---
@@ -70,7 +74,7 @@
 
 This hardware-based PWM library, a wrapper and enhancement around ESP32-core `ledc` code, enables you to use Hardware-PWM on `ESP32, ESP32_S2, ESP32_S3 and ESP32_C3` boards to create and output PWM. These purely hardware-based PWM channels can generate very high PWM frequencies, depending on CPU clock and acceptable accuracy. The maximum resolution can be 20-bit with very low frequencies. Normally 8, 12 or 16-bit resolution is good enough.
 
-```
+```cpp
 // Max resolution is 20-bit
 // Resolution 65536 (16-bit) for lower frequencies, OK @ 1K
 // Resolution  4096 (12-bit) for lower frequencies, OK @ 10K
@@ -368,7 +372,7 @@ https://github.com/khoih-prog/ESP32_FastPWM/blob/09ea7daef68ab6660d298e9ef2e20f5
 The following is the sample terminal output when running example [PWM_DynamicDutyCycle](examples/PWM_DynamicDutyCycle) on *ESP32_DEV**, to demonstrate the ability to provide high PWM frequencies and ability to change DutyCycle `on-the-fly`.
 
 
-```
+```cpp
 Starting PWM_DynamicDutyCycle on ESP32_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
@@ -401,7 +405,7 @@ Actual data: pin = 16, PWM DC = 89.84, PWMPeriod = 200.00, PWM Freq (Hz) = 5000.
 
 The following is the sample terminal output when running example [**PWM_Multi**](examples/PWM_Multi) on **ESP32_DEV**, to demonstrate the ability to provide high PWM frequencies on multiple `PWM-capable` pins.
 
-```
+```cpp
 Starting PWM_Multi on ESP32_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: new _channel = 0
@@ -447,7 +451,7 @@ Actual data: pin = 21, PWM DC = 89.99, PWMPeriod = 125.00, PWM Freq (Hz) = 8000.
 
 The following is the sample terminal output when running example [**PWM_DynamicFreq**](examples/PWM_DynamicFreq) on **ESP32S3_DEV**, to demonstrate the ability to change dynamically PWM frequencies.
 
-```
+```cpp
 Starting PWM_DynamicFreq on ESP32S3_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
@@ -492,7 +496,7 @@ Actual data: pin = 16, PWM DC = 50.00, PWMPeriod = 100.00, PWM Freq (Hz) = 10000
 The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **ESP32S2_DEV**, to demonstrate how to use the `setPWM_manual()` function in wafeform creation
 
 
-```
+```cpp
 Starting PWM_Waveform on ESP32S2_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: new _channel = 0
@@ -553,7 +557,7 @@ Actual data: pin = 16, PWM DutyCycle = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) 
 The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **ESP32C3_DEV**, to demonstrate how to use the `setPWM_manual()` function in wafeform creation
 
 
-```
+```cpp
 Starting PWM_Waveform on ESP32C3_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: new _channel = 0
@@ -614,7 +618,7 @@ Actual data: pin = 9, PWM DutyCycle = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) =
 The following is the sample terminal output when running example [**PWM_Waveform**](examples/PWM_Waveform) on **ESP32S3_DEV**, to demonstrate how to use the `setPWM_manual()` function in wafeform creation
 
 
-```
+```cpp
 Starting PWM_Waveform on ESP32S3_DEV
 ESP32_FastPWM v1.0.0
 [PWM] ESP32_FastPWM: new _channel = 0
@@ -742,6 +746,6 @@ If you want to contribute to this project:
 
 ## Copyright
 
-Copyright 2022- Khoi Hoang
+Copyright (c) 2022- Khoi Hoang
 
 

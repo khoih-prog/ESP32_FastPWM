@@ -10,10 +10,10 @@
   This is pure hardware-based PWM
 *****************************************************************************************************************************/
 /******************************************************************************************************************************
-// All GPIO pins (but GPIO34-39) can be used to generate PWM
-// For ESP32, number of channels is 16, max 20-bit resolution
-// For ESP32_S2, ESP32_S3, number of channels is 8
-// For ESP32_C3, number of channels is 6
+  // All GPIO pins (but GPIO34-39) can be used to generate PWM
+  // For ESP32, number of channels is 16, max 20-bit resolution
+  // For ESP32_S2, ESP32_S3, number of channels is 8
+  // For ESP32_C3, number of channels is 6
 ******************************************************************************************************************************/
 
 #define _PWM_LOGLEVEL_       4
