@@ -17,6 +17,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.0.1](#releases-v101)
   * [Releases v1.0.0](#releases-v100)
 
 ---
@@ -24,7 +25,13 @@
 
 ## Changelog
 
+### Releases v1.0.1
+
+1. Add example [PWM_StepperControl](https://github.com/khoih-prog/ESP32_FastPWM/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM. Check [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16)
+
 
 ### Releases v1.0.0
 
 1. Initial coding for ESP32, ESP32_S2, ESP32_S3 and ESP32_C3 boards using [ESP32 core](https://github.com/espressif/arduino-esp32)
+
+

@@ -10,6 +10,7 @@
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
 <a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
 
+
 ---
 ---
 
@@ -43,6 +44,7 @@
   * [ 5. PWM_Multi](examples/PWM_Multi)
   * [ 6. PWM_MultiChannel](examples/PWM_MultiChannel)
   * [ 7. PWM_Waveform](examples/PWM_Waveform)
+  * [ 8. PWM_StepperControl](examples/PWM_StepperControl) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_DynamicDutyCycle on ESP32_DEV](#1-PWM_DynamicDutyCycle-on-ESP32_DEV)
@@ -142,7 +144,7 @@ Functions using normal software-based PWMs, relying on loop() and calling millis
 ## Prerequisites
 
 1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
-2. [`ESP32 Core 2.0.5+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/).
+2. [`ESP32 Core 2.0.6+`](https://github.com/espressif/arduino-esp32) for ESP32-based boards. [![Latest release](https://img.shields.io/github/release/espressif/arduino-esp32.svg)](https://github.com/espressif/arduino-esp32/releases/latest/).
 
 
 
@@ -185,22 +187,22 @@ Please have a look at [**ESP_WiFiManager Issue 39: Not able to read analog port 
 
 #### 2. ESP32 ADCs functions
 
-- ADC1 controls ADC function for pins **GPIO32-GPIO39**
-- ADC2 controls ADC function for pins **GPIO0, 2, 4, 12-15, 25-27**
+- `ADC1` controls ADC function for pins **GPIO32-GPIO39**
+- `ADC2` controls ADC function for pins **GPIO0, 2, 4, 12-15, 25-27**
 
 #### 3.. ESP32 WiFi uses ADC2 for WiFi functions
 
 Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master/components/driver/adc_common.c#L61)
 
-> In ADC2, there're two locks used for different cases:
+> In `ADC2`, there're two locks used for different cases:
 > 1. lock shared with app and Wi-Fi:
 >    ESP32:
->         When Wi-Fi using the ADC2, we assume it will never stop, so app checks the lock and returns immediately if failed.
+>         When Wi-Fi using the `ADC2`, we assume it will never stop, so app checks the lock and returns immediately if failed.
 >    ESP32S2:
 >         The controller's control over the ADC is determined by the arbiter. There is no need to control by lock.
 > 
 > 2. lock shared between tasks:
->    when several tasks sharing the ADC2, we want to guarantee
+>    when several tasks sharing the `ADC2`, we want to guarantee
 >    all the requests will be handled.
 >    Since conversions are short (about 31us), app returns the lock very soon,
 >    we use a spinlock to stand there waiting to do conversions one by one.
@@ -208,10 +210,10 @@ Look in file [**adc_common.c**](https://github.com/espressif/esp-idf/blob/master
 > adc2_spinlock should be acquired first, then adc2_wifi_lock or rtc_spinlock.
 
 
-- In order to use ADC2 for other functions, we have to **acquire complicated firmware locks and very difficult to do**
-- So, it's not advisable to use ADC2 with WiFi/BlueTooth (BT/BLE).
-- Use ADC1, and pins GPIO32-GPIO39
-- If somehow it's a must to use those pins serviced by ADC2 (**GPIO0, 2, 4, 12, 13, 14, 15, 25, 26 and 27**), use the **fix mentioned at the end** of [**ESP_WiFiManager Issue 39: Not able to read analog port when using the autoconnect example**](https://github.com/khoih-prog/ESP_WiFiManager/issues/39) to work with ESP32 WiFi/BlueTooth (BT/BLE).
+- In order to use `ADC2` for other functions, we have to **acquire complicated firmware locks and very difficult to do**
+- So, it's not advisable to use `ADC2` with WiFi/BlueTooth (BT/BLE).
+- Use `ADC1`, and pins **GPIO32-GPIO39**
+- If somehow it's a must to use those pins serviced by `ADC2` (**GPIO0, 2, 4, 12, 13, 14, 15, 25, 26 and 27**), use the **fix mentioned at the end** of [**ESP_WiFiManager Issue 39: Not able to read analog port when using the autoconnect example**](https://github.com/khoih-prog/ESP_WiFiManager/issues/39) to work with ESP32 WiFi/BlueTooth (BT/BLE)
 
 ---
 ---
@@ -349,6 +351,7 @@ PWM_Instance->setPWM_manual(PWM_Pins, new_level);
  5. [PWM_Multi](examples/PWM_Multi)
  6. [PWM_MultiChannel](examples/PWM_MultiChannel)
  7. [PWM_Waveform](examples/PWM_Waveform)
+ 8. [PWM_StepperControl](examples/PWM_StepperControl) **New**
 
  
 ---
@@ -371,7 +374,7 @@ The following is the sample terminal output when running example [PWM_DynamicDut
 
 ```cpp
 Starting PWM_DynamicDutyCycle on ESP32_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
 [PWM] ESP32_FastPWM: _dutycycle = 32768
 [PWM] setPWM_Int: _dutycycle = 128 , DC % = 50.00
@@ -404,7 +407,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```cpp
 Starting PWM_Multi on ESP32_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
 [PWM] ESP32_FastPWM: _dutycycle = 6553
@@ -450,7 +453,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```cpp
 Starting PWM_DynamicFreq on ESP32S3_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 32768
 [PWM] setPWM_Int: _dutycycle = 128 , DC % = 50.00
@@ -495,7 +498,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32S2_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -556,7 +559,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32C3_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 6 , LEDC_CHANNELS = 6 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -617,7 +620,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32S3_DEV
-ESP32_FastPWM v1.0.0
+ESP32_FastPWM v1.0.1
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -706,14 +709,13 @@ Submit issues to: [ESP32_FastPWM issues](https://github.com/khoih-prog/ESP32_Fas
 ## TO DO
 
 1. Search for bug and improvement.
-2. Similar features for remaining Arduino boards such as SAMD21, SAMD51, SAM-DUE, nRF52, ESP8266, STM32, Portenta_H7, RP2040, etc.
 
-
+---
 
 ## DONE
 
  1. Basic hardware PWM-channels for `ESP32, ESP32_S2, ESP32_S3 and ESP32_C3` using [ESP32 core](https://github.com/espressif/arduino-esp32)
-
+ 2. Add example [PWM_StepperControl](https://github.com/khoih-prog/ESP32_FastPWM/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
 
 ---
 ---
@@ -722,12 +724,23 @@ Submit issues to: [ESP32_FastPWM issues](https://github.com/khoih-prog/ESP32_Fas
 
 Many thanks for everyone for bug reporting, new feature suggesting, testing and contributing to the development of this library.
 
+1. Thanks to [Paul van Dinther](https://github.com/dinther) for proposing new way to use PWM to drive Stepper-Motor in [Using PWM to step a stepper driver #16](https://github.com/khoih-prog/RP2040_PWM/issues/16), leading to v1.0.1
+
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/dinther"><img src="https://github.com/dinther.png" width="100px;" alt="dinther"/><br /><sub><b>Paul van Dinther</b></sub></a><br /></td>
+  </tr>
+</table>
+
+
 
 ---
 
 ## Contributing
 
 If you want to contribute to this project:
+
 - Report bugs and errors
 - Ask for enhancements
 - Create issues and pull requests

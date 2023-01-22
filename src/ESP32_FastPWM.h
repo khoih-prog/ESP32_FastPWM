@@ -7,11 +7,12 @@
   Built by Khoi Hoang https://github.com/khoih-prog/ESP32_FastPWM
   Licensed under MIT license
 
-  Version: 1.0.0
+  Version: 1.0.1
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K Hoang      31/10/2022 Initial coding for ESP32, ESP32_S2, ESP32_C3 boards with ESP32 core v2.0.0+
+  1.0.1   K Hoang      22/01/2023 Add `PWM_StepperControl` example
 *****************************************************************************************************************************/
 
 #pragma once
@@ -48,13 +49,13 @@
 #endif
 
 #ifndef ESP32_FAST_PWM_VERSION
-  #define ESP32_FAST_PWM_VERSION           F("ESP32_FastPWM v1.0.0")
+  #define ESP32_FAST_PWM_VERSION           F("ESP32_FastPWM v1.0.1")
 
   #define ESP32_FAST_PWM_VERSION_MAJOR     1
   #define ESP32_FAST_PWM_VERSION_MINOR     0
-  #define ESP32_FAST_PWM_VERSION_PATCH     0
+  #define ESP32_FAST_PWM_VERSION_PATCH     1
 
-  #define ESP32_FAST_PWM_VERSION_INT       1000000
+  #define ESP32_FAST_PWM_VERSION_INT       1000001
 #endif
 
 #include "PWM_Generic_Debug.h"
