@@ -687,7 +687,7 @@ Actual data: pin = 16, PWM DutyCycle = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) 
 
 ---
 
-### 7. PWM_Waveform on ESP32_DEV
+### 7. PWM_manual on ESP32_DEV
 
 The following is the sample terminal output when running example [**PWM_manual**](examples/PWM_manual) on **ESP32_DEV**, to demonstrate how to use the `setPWM_manual()` and `setPWM_DCPercentage_manual()` functions in wafeform creation
 
@@ -855,7 +855,7 @@ Submit issues to: [ESP32_FastPWM issues](https://github.com/khoih-prog/ESP32_Fas
  2. Add example [PWM_StepperControl](https://github.com/khoih-prog/ESP32_FastPWM/tree/main/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
  3. Add example [PWM_manual](https://github.com/khoih-prog/ESP32_FastPWM/tree/main/examples/PWM_manual) to demo how to correctly use PWM to generate waveform
  4. Add function `setPWM_DCPercentage_manual()` to facilitate the setting PWM DC manually by using DCPercentage, instead of absolute DCValue depending on varying PWMPeriod
- 
+ 5. Fix glitch when changing PWM frequency
  
 ---
 ---
