@@ -45,6 +45,7 @@
   * [ 6. PWM_MultiChannel](examples/PWM_MultiChannel)
   * [ 7. PWM_Waveform](examples/PWM_Waveform)
   * [ 8. PWM_StepperControl](examples/PWM_StepperControl) **New**
+  * [ 9. PWM_manual](examples/PWM_manual) **New**
 * [Example PWM_Multi](#example-PWM_Multi)
 * [Debug Terminal Output Samples](#debug-terminal-output-samples)
   * [1. PWM_DynamicDutyCycle on ESP32_DEV](#1-PWM_DynamicDutyCycle-on-ESP32_DEV)
@@ -53,6 +54,7 @@
   * [4. PWM_Waveform on ESP32S2_DEV](#4-PWM_Waveform-on-ESP32S2_DEV)
   * [5. PWM_Waveform on ESP32C3_DEV](#5-PWM_Waveform-on-ESP32C3_DEV)
   * [6. PWM_Waveform on ESP32S3_DEV](#6-PWM_Waveform-on-ESP32S3_DEV)
+  * [7. PWM_manual on ESP32_DEV](#7-PWM_manual-on-ESP32_DEV)
 * [Debug](#debug)
 * [Troubleshooting](#troubleshooting)
 * [Issues](#issues)
@@ -105,7 +107,7 @@ The most important feature is they're purely hardware-based PWM channels. Theref
 
 This important feature is absolutely necessary for mission-critical tasks. These hardware PWM-channels, still work even if other software functions are blocking. Moreover, they are much more precise (certainly depending on clock frequency accuracy) than other software timers using millis() or micros(). That's necessary if you need to control external systems (Servo, etc.) requiring better accuracy.
 
-New efficient `setPWM_manual()` function enables waveform creation using PWM.
+New efficient `setPWM_manual()` and `setPWM_DCPercentage_manual()` functions enable waveform creation using PWM.
 
 The [**PWM_Multi**](examples/PWM_Multi) example will demonstrate the usage of multichannel PWM using multiple Hardware-PWM blocks (slices). The 4 independent Hardware-PWM channels are used **to control 4 different PWM outputs**, with totally independent frequencies and dutycycles on `ESP32`.
 
@@ -323,6 +325,7 @@ Function prototype
 
 ```cpp
 bool setPWM_manual(const uint8_t& pin, const uint16_t& DCValue);
+bool setPWM_DCPercentage_manual(const uint8_t& pin, const float& DCPercentage);
 ```
 
 Need to call only once for each pin
@@ -335,9 +338,17 @@ PWM_Instance->setPWM(PWM_Pins, frequency, dutyCycle);
 after that, if just changing `dutyCycle` / `level`, use 
 
 ```cpp
+// For 50.0f dutycycle
+new_level = 50.0f * ( 1 << PWM_Instance->getResolution() ) / 100.0f ;
 PWM_Instance->setPWM_manual(PWM_Pins, new_level);
 ```
 
+or better and much easier to use
+
+```cpp
+new_DCPercentage = 50.0f;
+PWM_Instance->setPWM_DCPercentage_manual(PWM_Pins, new_DCPercentage);
+```
 
 ---
 ---
@@ -352,6 +363,7 @@ PWM_Instance->setPWM_manual(PWM_Pins, new_level);
  6. [PWM_MultiChannel](examples/PWM_MultiChannel)
  7. [PWM_Waveform](examples/PWM_Waveform)
  8. [PWM_StepperControl](examples/PWM_StepperControl) **New**
+ 9. [PWM_manual](examples/PWM_manual) **New**
 
  
 ---
@@ -374,7 +386,7 @@ The following is the sample terminal output when running example [PWM_DynamicDut
 
 ```cpp
 Starting PWM_DynamicDutyCycle on ESP32_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
 [PWM] ESP32_FastPWM: _dutycycle = 32768
 [PWM] setPWM_Int: _dutycycle = 128 , DC % = 50.00
@@ -407,7 +419,7 @@ The following is the sample terminal output when running example [**PWM_Multi**]
 
 ```cpp
 Starting PWM_Multi on ESP32_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
 [PWM] ESP32_FastPWM: _dutycycle = 6553
@@ -453,7 +465,7 @@ The following is the sample terminal output when running example [**PWM_DynamicF
 
 ```cpp
 Starting PWM_DynamicFreq on ESP32S3_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 32768
 [PWM] setPWM_Int: _dutycycle = 128 , DC % = 50.00
@@ -498,7 +510,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32S2_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -559,7 +571,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32C3_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 6 , LEDC_CHANNELS = 6 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -620,7 +632,7 @@ The following is the sample terminal output when running example [**PWM_Waveform
 
 ```cpp
 Starting PWM_Waveform on ESP32S3_DEV
-ESP32_FastPWM v1.0.1
+ESP32_FastPWM v1.1.0
 [PWM] ESP32_FastPWM: new _channel = 0
 [PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 8 , LEDC_MAX_BIT_WIDTH = 14
 [PWM] ESP32_FastPWM: _dutycycle = 0
@@ -672,6 +684,131 @@ Actual data: pin = 16, PWM DutyCycle = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) 
 [PWM] setPWM_manual: DCValue = 0 , _frequency = 1000.00
 ```
 
+
+---
+
+### 7. PWM_Waveform on ESP32_DEV
+
+The following is the sample terminal output when running example [**PWM_manual**](examples/PWM_manual) on **ESP32_DEV**, to demonstrate how to use the `setPWM_manual()` and `setPWM_DCPercentage_manual()` functions in wafeform creation
+
+
+```cpp
+Starting PWM_manual on ESP32_DEV
+ESP32_FastPWM v1.1.0
+[PWM] ESP32_FastPWM: new _channel = 0
+[PWM] ESP32_FastPWM: SOC_LEDC_CHANNEL_NUM = 8 , LEDC_CHANNELS = 16 , LEDC_MAX_BIT_WIDTH = 20
+[PWM] ESP32_FastPWM: _dutycycle = 0
+[PWM] setPWM_Int: _dutycycle = 0 , DC % = 0.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 0.00 , new_dc = 0
+[PWM] setPWM_manual: DCValue = 0 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 5.00 , new_dc = 3276
+[PWM] setPWM_manual: DCValue = 3276 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 5.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 10.00 , new_dc = 6553
+[PWM] setPWM_manual: DCValue = 6553 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 10.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 15.00 , new_dc = 9830
+[PWM] setPWM_manual: DCValue = 9830 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 15.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 20.00 , new_dc = 13107
+[PWM] setPWM_manual: DCValue = 13107 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 20.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 25.00 , new_dc = 16384
+[PWM] setPWM_manual: DCValue = 16384 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 25.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 30.00 , new_dc = 19660
+[PWM] setPWM_manual: DCValue = 19660 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 30.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 35.00 , new_dc = 22937
+[PWM] setPWM_manual: DCValue = 22937 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 35.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 40.00 , new_dc = 26214
+[PWM] setPWM_manual: DCValue = 26214 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 40.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 45.00 , new_dc = 29491
+[PWM] setPWM_manual: DCValue = 29491 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 45.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 50.00 , new_dc = 32768
+[PWM] setPWM_manual: DCValue = 32768 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 50.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 55.00 , new_dc = 36044
+[PWM] setPWM_manual: DCValue = 36044 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 55.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 60.00 , new_dc = 39321
+[PWM] setPWM_manual: DCValue = 39321 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 60.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 65.00 , new_dc = 42598
+[PWM] setPWM_manual: DCValue = 42598 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 65.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 70.00 , new_dc = 45875
+[PWM] setPWM_manual: DCValue = 45875 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 70.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 75.00 , new_dc = 49152
+[PWM] setPWM_manual: DCValue = 49152 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 75.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 80.00 , new_dc = 52428
+[PWM] setPWM_manual: DCValue = 52428 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 80.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 85.00 , new_dc = 55705
+[PWM] setPWM_manual: DCValue = 55705 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 85.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 90.00 , new_dc = 58982
+[PWM] setPWM_manual: DCValue = 58982 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 90.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 95.00 , new_dc = 62259
+[PWM] setPWM_manual: DCValue = 62259 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 95.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+[PWM] setPWM_DCPercentage_manual: DCPercentage = 100.00 , new_dc = 0
+[PWM] setPWM_manual: DCValue = 0 , _frequency = 1000.00
+=================================================================================================
+Actual data: pin = 16, PWM DC = 0.00, PWMPeriod = 1000.00, PWM Freq (Hz) = 1000.0000
+=================================================================================================
+```
+
 ---
 ---
 
@@ -715,8 +852,11 @@ Submit issues to: [ESP32_FastPWM issues](https://github.com/khoih-prog/ESP32_Fas
 ## DONE
 
  1. Basic hardware PWM-channels for `ESP32, ESP32_S2, ESP32_S3 and ESP32_C3` using [ESP32 core](https://github.com/espressif/arduino-esp32)
- 2. Add example [PWM_StepperControl](https://github.com/khoih-prog/ESP32_FastPWM/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
-
+ 2. Add example [PWM_StepperControl](https://github.com/khoih-prog/ESP32_FastPWM/tree/main/examples/PWM_StepperControl) to demo how to control Stepper Motor using PWM
+ 3. Add example [PWM_manual](https://github.com/khoih-prog/ESP32_FastPWM/tree/main/examples/PWM_manual) to demo how to correctly use PWM to generate waveform
+ 4. Add function `setPWM_DCPercentage_manual()` to facilitate the setting PWM DC manually by using DCPercentage, instead of absolute DCValue depending on varying PWMPeriod
+ 
+ 
 ---
 ---
 

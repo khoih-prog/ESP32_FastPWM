@@ -7,12 +7,13 @@
   Built by Khoi Hoang https://github.com/khoih-prog/ESP32_FastPWM
   Licensed under MIT license
 
-  Version: 1.0.1
+  Version: 1.1.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K Hoang      31/10/2022 Initial coding for ESP32, ESP32_S2, ESP32_C3 boards with ESP32 core v2.0.0+
   1.0.1   K Hoang      22/01/2023 Add `PWM_StepperControl` example
+  1.1.0   K Hoang      25/01/2023 Add `PWM_manual` example and function
 *****************************************************************************************************************************/
 
 #pragma once
@@ -49,13 +50,13 @@
 #endif
 
 #ifndef ESP32_FAST_PWM_VERSION
-  #define ESP32_FAST_PWM_VERSION           F("ESP32_FastPWM v1.0.1")
+  #define ESP32_FAST_PWM_VERSION           F("ESP32_FastPWM v1.1.0")
 
   #define ESP32_FAST_PWM_VERSION_MAJOR     1
-  #define ESP32_FAST_PWM_VERSION_MINOR     0
-  #define ESP32_FAST_PWM_VERSION_PATCH     1
+  #define ESP32_FAST_PWM_VERSION_MINOR     1
+  #define ESP32_FAST_PWM_VERSION_PATCH     0
 
-  #define ESP32_FAST_PWM_VERSION_INT       1000001
+  #define ESP32_FAST_PWM_VERSION_INT       1001000
 #endif
 
 #include "PWM_Generic_Debug.h"
@@ -198,8 +199,9 @@ class ESP32_FAST_PWM
 
         _frequency  = frequency;
 
-        ledcSetup(_channel, frequency, _resolution);
-        ledcAttachPin(pin, _channel);
+        // To avoid glitch when changing frequency
+        // esp_err_t ledc_set_freq(ledc_mode_t speed_mode, ledc_timer_t timer_num, uint32_t freq_hz);
+        ledc_set_freq(_group, (ledc_timer_t) _timer, frequency);     
       }
 
       if (dutycycle == 0)
@@ -254,7 +256,13 @@ class ESP32_FAST_PWM
     {
       // Not the same pin or overvalue
       if ( (_pin != pin) || (DCValue >  (1 << _resolution) ) )
+      {
+        PWM_LOGDEBUG3(F("setPWM_manual: Error! DCValue ="), DCValue, F(" > 1 << _resolution ="), 1 << _resolution);
+        
         return false;
+      }
+      
+      _dutycycle = (uint32_t) DCValue;
 
       ledc_set_duty(_group, _channel, DCValue);
       ledc_update_duty(_group, _channel);
@@ -263,6 +271,14 @@ class ESP32_FAST_PWM
       PWM_LOGDEBUG3(F("setPWM_manual: DCValue ="), DCValue, F(", _frequency ="), _frequency);
 
       return true;
+    }
+    
+    ///////////////////////////////////////////
+    
+    // DCPercentage from 0.0f - 100.0f
+    bool setPWM_DCPercentage_manual(const uint8_t& pin, const float& DCPercentage)
+    {     
+      return setPWM_manual(pin, ( DCPercentage * (1 << _resolution) ) / 100.0f);
     }
 
     ///////////////////////////////////////////
@@ -298,6 +314,13 @@ class ESP32_FAST_PWM
     inline uint32_t getPin()
     {
       return _pin;
+    }
+    
+    ///////////////////////////////////////////
+
+    inline uint32_t getResolution()
+    {
+      return _resolution;
     }
 
     ///////////////////////////////////////////////////////////////////

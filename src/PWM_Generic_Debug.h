@@ -6,12 +6,13 @@
   Built by Khoi Hoang https://github.com/khoih-prog/ESP32_FastPWM
   Licensed under MIT license
 
-  Version: 1.0.1
+  Version: 1.1.0
 
   Version Modified By   Date      Comments
   ------- -----------  ---------- -----------
   1.0.0   K Hoang      31/10/2022 Initial coding for ESP32, ESP32_S2, ESP32_C3 boards with ESP32 core v2.0.0+
   1.0.1   K Hoang      22/01/2023 Add `PWM_StepperControl` example
+  1.1.0   K Hoang      25/01/2023 Add `PWM_manual` example and function
  *****************************************************************************************************************************/
 
 #pragma once
